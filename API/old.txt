@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -21,19 +21,7 @@
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:5000;https://localhost:5001;",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "API Watch": {
-      "commandName": "Executable",
-      "executablePath": "dotnet",
-      "workingDirectory": "$(ProjectDir)",
-      "hotReloadEnabled": true,
-      "hotReloadProfile" : "aspnetcore",
-      "commandLineArgs": "watch run",
-      "launchBrowser": false,
+      "launchUrl": ".",
       "applicationUrl": "http://localhost:5000;https://localhost:5001;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
