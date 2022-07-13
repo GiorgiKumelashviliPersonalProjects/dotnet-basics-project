@@ -4,10 +4,17 @@ namespace API.DTO
 {
     public class RegisterDto
     {
+        public RegisterDto(string password, string username)
+        {
+            Password = password;
+            Username = username;
+        }
+
         [Required]
-        public string Username { get; set; }
+        public string Username { get; }
         
         [Required]
-        public string Password { get; set; }
+        [StringLength(8, MinimumLength = 6)]
+        public string Password { get; }
     }
 }

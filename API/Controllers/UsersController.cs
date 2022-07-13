@@ -30,6 +30,7 @@ namespace API.Controllers
             return await _context.Users.ToListAsync().ConfigureAwait(false);
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
