@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using API.Extensions;
 
 namespace API.Entities
 {
@@ -17,10 +16,5 @@ namespace API.Entities
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         
         public ICollection<Photo> Photos { get; set; }
-        
-        public int GetAge()
-        {
-            return DateOfBirth.CalculateAge();
-        }
     }
 }
