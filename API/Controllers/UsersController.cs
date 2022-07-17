@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTO;
+using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -21,9 +23,18 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<MemberDto>> GetUsers()
+        public async Task<IEnumerable<MemberDto>> GetUsers([FromQuery] UserParams userParams)
         {
-            return await _userRepository.GetMembersAsync();
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(
+                currentPage: users.CurrentPage,
+                itemsPerPage: users.PageSize,
+                totalItems: users.TotalCount,
+                totalPages: users.TotalPages
+            );
+
+            return users;
         }
 
         [Authorize]

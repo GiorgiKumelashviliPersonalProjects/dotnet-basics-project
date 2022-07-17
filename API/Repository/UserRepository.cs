@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -17,7 +18,7 @@ namespace API.Repository
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public UserRepository(DataContext context,IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -50,11 +51,18 @@ namespace API.Repository
             return await _context.Users.SingleOrDefaultAsync(user => user.UserName.Equals(username));
         }
 
-        public Task<List<MemberDto>> GetMembersAsync()
+        // public Task<List<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return _context.Users
+            IQueryable<MemberDto> query = _context.Users
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
+
+            return await PagedList<MemberDto>.CreateAsync(
+                query,
+                pageNumber: userParams.PageNumber,
+                pageSize: userParams.PageSize
+            );
         }
 
         public Task<MemberDto> GetMemberAsync(int id)
