@@ -16,5 +16,8 @@ namespace API.Entities
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         
         public ICollection<Photo> Photos { get; set; }
+        
+        public ICollection<UserLikes> LikedByUsers { get; set; }
+        public ICollection<UserLikes> LikedUsers { get; set; }
     }
 }
