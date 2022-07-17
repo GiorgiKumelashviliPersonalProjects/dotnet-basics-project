@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Extensions;
@@ -25,6 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<MemberDto>> GetUsers([FromQuery] UserParams userParams)
         {
+            string username = User.GetUsername();
             var users = await _userRepository.GetMembersAsync(userParams);
 
             Response.AddPaginationHeader(

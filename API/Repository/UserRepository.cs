@@ -51,15 +51,22 @@ namespace API.Repository
             return await _context.Users.SingleOrDefaultAsync(user => user.UserName.Equals(username));
         }
 
-        // public Task<List<MemberDto>> GetMembersAsync()
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            IQueryable<MemberDto> query = _context.Users
+            IQueryable<AppUser> query = _context.Users.AsQueryable();
+
+            // filter here
+            if (!string.IsNullOrEmpty(userParams.CurrentUsername))
+            {
+                query = query.Where(user => user.UserName.Equals(userParams.CurrentUsername));
+            }
+
+            IQueryable<MemberDto> finalQuery = query
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking();
 
             return await PagedList<MemberDto>.CreateAsync(
-                query,
+                finalQuery,
                 pageNumber: userParams.PageNumber,
                 pageSize: userParams.PageSize
             );
