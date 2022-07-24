@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Extensions;
@@ -23,11 +21,11 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<MemberDto>> GetUsers([FromQuery] UserParams userParams)
         {
-            string username = User.GetUsername();
+            // string username = User.GetUsername();
             var users = await _userRepository.GetMembersAsync(userParams);
 
             Response.AddPaginationHeader(
@@ -40,14 +38,14 @@ namespace API.Controllers
             return users;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [HttpGet("{id:int}")]
         public async Task<MemberDto> GetUser(int id)
         {
             return await _userRepository.GetMemberAsync(id);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [HttpGet("{username}")]
         public async Task<MemberDto> GetUser(string username)
         {

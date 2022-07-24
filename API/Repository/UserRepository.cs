@@ -61,7 +61,7 @@ namespace API.Repository
                 query = query.Where(user => user.UserName.Equals(userParams.CurrentUsername));
             }
 
-            IQueryable<MemberDto> finalQuery = query
+            var finalQuery = query
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking();
 
